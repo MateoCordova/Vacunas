@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Mi información{% endblock %}
+{% block content %}
+<h1>Mis datos - Editar</h1>
+<form action="{% url 'vacunas:save' %}" method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
+        <input type="date" class="form-text" name="fecha_nacimiento" id="fecha_nacimiento" value="{{ empleado.fecha_nacimiento_formato}}">
+    </div>
+    <div class="mb-3">
+        <label for="direccion" class="form-label">Dirección de domicilio</label>
+        <input type="text" class="form-text" name="direccion" id="direccion" value="{{ empleado.direccion}}"></span>
+    </div>
+    <div class="mb-3">
+        <label for="telefono" class="form-label">Teléfono móvil</label>
+        <input type="tel" class="form-text" name="telefono" id="telefono" value="{{ empleado.telefono}}"></span>
+    </div>
+    <div class="mb-5">
+        <h3>Vacunación</h3>
+        <span id="Vacunas">
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col">
+                        <label for="tipo_vacuna" class="form-label">Tipo de Vacuna</label>
+                        <select class="form-text" id="tipo_vacuna" name="tipo_vacuna">
+                            <option value="" disabled>-- Seleccione --</option>
+                            <option value="-1" >Sin vacuna</option>
+                            {% for marca in tipo_vacunas.all %}
+                            {% if empleado.vacunaempleado %}
+                                {% if empleado.vacunaempleado.tipo_vacuna == marca %}
+                                <option value="{{marca.id}}" selected>{{ marca }}</option>
+                                {% else %}
+                                <option value="{{marca.id}}">{{ marca }}</option>
+                                {% endif%}
+                            {% else %}
+                            <option value="{{marca.id}}">{{ marca }}</option>
+                            {% endif%}   
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="fechaVacuna" class="form-label">Fecha Vacunación</label>
+                        <input type="date" class="form-text" id="fechaVacuna" name="fechaVacuna"
+                        {% if empleado.vacunaempleado %}
+                            value="{{ empleado.vacunaempleado.fecha_formato}}"
+                        {% else %}
+                            value=""
+                        {% endif %}>
+                    </div>
+                    <div class="col">
+                        <label for="dosis_N" class="form-label">Dosis</label>
+                        <input type="number" class="form-text" id="dosis_N" name="dosis_N"
+                        {% if empleado.vacunaempleado %}
+                        value="{{ empleado.vacunaempleado.dosis_N}}"
+                    {% else %}
+                        value=""
+                    {% endif %}>
+                    </div>
+                </div>
+            </div>
+        </span>
+    </div>
+    <div class="mb-3">
+        <input type="submit" class="btn btn-primary" value="Guardar">
+    </div>
+</form>
+{% endblock %}

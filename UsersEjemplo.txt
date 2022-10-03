@@ -1,0 +1,12 @@
+//Admin
+
+U: admin
+P: admin
+
+//
+Empleados:
+U: JaKrugger
+P: 8GEAT
+
+U:VíOslo
+P:XC9U2

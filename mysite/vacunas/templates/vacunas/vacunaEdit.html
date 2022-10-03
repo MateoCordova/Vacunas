@@ -1,0 +1,26 @@
+{% for vacuna in vacunasEmpleado.all %}
+<div class="mb-3">
+    <div class="row">
+        <div class="col">
+            <label for="marca{{ vacuna.id }}" class="form-label">Tipo de Vacuna</label>
+            <select class="form-text" id="marca{{ vacuna.id }}">
+                <option value="" disabled>-- Seleccione --</option>
+                {% for marca in tipoVacuna.all %}
+                {% if vacuna.tipo_vacuna == marca %}
+                <option value= "{{marca.id}}" selected>{{ marca }}</option>
+                {% else %}
+                <option value= "{{marca.id}}">{{ marca }}</option>
+                {% endif%}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col">
+            <label for="fechaVacuna{{ forloop.counter }}" class="form-label">Fecha Vacunación</label>
+            <input type="date" class="form-text" id="fechaVacuna{{ forloop.counter }}" value="{{ vacuna.fecha}}">
+        </div>
+        <div class="col">
+            <button onclick="deleteVacuna()">Eliminar</button>
+        </div>
+    </div>
+</div>
+{% endfor %}
